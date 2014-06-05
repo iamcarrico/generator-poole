@@ -5,6 +5,14 @@
 
 ## Getting Started
 
+### Welcome to Mr. Poole
+
+Mr. Poole likes Jekyll, he likes it so much he wanted a good starting point and way to generate better Jekyll sites. He is here to help you, and wants you to like what he does.
+
+
+If you are looking for the Ruby command line tools, this is not the place. Check out [Mr. Poole, ruby](https://github.com/mmcclimon/mr_poole).
+
+
 ### What is Yeoman?
 
 Trick question. It's not a thing. It's this guy:
@@ -16,7 +24,7 @@ Basically, he wears a top hat, lives in your computer, and waits for you to tell
 Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](https://npmjs.org) package repository. You only have to ask for him once, then he packs up and moves into your hard drive. *Make sure you clean up, he likes new and shiny things.*
 
 ```bash
-$ npm install -g yo
+$ npm install -g yo generator-poole
 ```
 
 ### Yeoman Generators

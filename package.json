@@ -1,7 +1,7 @@
 {
   "name": "generator-poole",
   "version": "0.0.0",
-  "description": "Yeoman generator",
+  "description": "A Yeoman generator for Jekyll sites.",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "iamcarrico/generator-poole",
@@ -17,15 +17,20 @@
     "test": "mocha"
   },
   "files": [
-    "app"
+    "app",
+    "shared.js"
   ],
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "jekyll",
+    "jekyllrb"
   ],
   "dependencies": {
     "yeoman-generator": "~0.16.0",
     "chalk": "~0.4.0",
-    "yosay": "^0.1.0"
+    "yosay": "^0.1.0",
+    "underscore.string": "~2.3.3",
+    "execSync": "~1.0.1-pre"
   },
   "devDependencies": {
     "mocha": "*"

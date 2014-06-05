@@ -1,6 +1,10 @@
 {
-  "name": "package",
+  "name": "<%= projectSlug %>",
   "version": "0.0.0",
-  "dependencies": {}
+  "dependencies": {
+    "singularity": "1.2.1",
+    "compass-breakpoint": "2.4.2",
+    "sass-toolkit": "2.3.0",
+    "jquery": "2.1.0"
+  }
 }
-

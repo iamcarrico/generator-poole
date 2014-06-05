@@ -1,0 +1,10 @@
+<header class="site-header">
+  <nav id="nav" role="navigation">
+    <div class="menubar" role="menubar">
+      <a class="menubar-link" role="menuitem" href="{{ site.baseurl }}/">{{ site.title }}</a>
+      {% for page in site.pages %}
+        <a class="menubar-link" role="menuitem" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
+      {% endfor %}
+    </div>
+  </nav>
+</header>

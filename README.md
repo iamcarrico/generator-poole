@@ -95,37 +95,8 @@ and Mr. Poole will ask you which post you want to move from drafts to a full pos
 
 ### Using Gulp.js
 
-Mr. Poole starts us all off with a Gulpfile, giving us a toolset for automating our frontend tasks.
+Mr. Poole starts us all off with a Gulpfile, giving us a toolset for automating our frontend tasks. For more information on the tasks available to us, check out the [Gulp Tools for Mr. Poole](https://github.com/iamcarrico/gulp-poole) repository.
 
-To compile all of our Sass files using compass, use:
-
-```bash
-$ gulp sass
-```
-
-To ensure all of our images are optimized:
-
-```bash
-$ gulp images
-```
-
-To build our Jekyll site, and serve it using BrowserSync. This will watch our files and ensure the proper tasks are run for us on their change. It will also automatically update our site, without the need for a refresh, all through BrowserSync.
-
-```bash
-$ gulp server
-```
-
-To build our site for production, and save the result in '_site':
-
-```bash
-$ gulp build
-```
-
-To build the site for production, and deploy that code to our gh-pages branch for us:
-
-```bash
-$ gulp deploy
-```
 
 ### Altering the Navigation
 

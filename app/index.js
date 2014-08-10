@@ -53,8 +53,7 @@ PooleGenerator.prototype.welcome = function() {
   var cb = this.async();
   if (!this.options['skip-welcome-message']) {
 
-    // Have Yeoman greet the user.
-    this.log(yosay('Welcome to the Poole Jekyll generator!'));
+    this.log(shared.welcome());
     this.log(
       chalk.green(
         'This generator will create the scaffolding for a full Jekyll site, complete with smarter Gulp settings, and deployment methods. ' + '\n'

@@ -1,5 +1,6 @@
 'use strict'
 
+var chalk = require('chalk');
 
 module.exports.today = function () {
   var date = new Date();
@@ -33,4 +34,20 @@ module.exports.checkTime = function (val) {
   }
 
   return 'All times must be HH:MM:SS';
+}
+
+module.exports.welcome = function() {
+  return '\n ' +
+  '\n ' + chalk.red('.___  ___. .______                    ') + chalk.grey('_-----_') +
+  '\n ' + chalk.red('|   \\/   | |   _  \\                   ') + chalk.grey('| - - |') +
+  '\n ' + chalk.red('|  \\  /  | |  |_)  |                  ') + chalk.grey('|  ω  |') +
+  '\n ' + chalk.red('|  |\\/|  | |      /                   ') + chalk.grey('| ___ |') +
+  '\n ' + chalk.red('|  |  |  | |  |\\  \\      __          ') + chalk.grey("__'.___.'__") +
+  '\n ' + chalk.red('|__|  |__| | _| `.__\\   (__)        ') + chalk.grey('´    >-<    `') +
+  '\n ' + chalk.red('.______     ______     ______    __       _______') +
+  '\n ' + chalk.red('|   _  \\   /  __  \\   /  __  \\  |  |     |   ____|') +
+  '\n ' + chalk.red('|  |_)  | |  |  |  | |  |  |  | |  |     |  |__') +
+  '\n ' + chalk.red('|   ___/  |  |  |  | |  |  |  | |  |     |   __|') +
+  '\n ' + chalk.red("|  |      |  `--'  | |  `--'  | |  `----.|  |____") +
+  '\n ' + chalk.red('| _|       \\______/   \\______/  |_______||_______|') + '\n';
 }

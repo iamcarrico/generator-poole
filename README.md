@@ -1,6 +1,6 @@
 # Mr. Poole, the Jekyll Site Generator
 
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] ![License MIT][license-image]  [![Downloads][downloads-image]][npm-url]
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![License MIT][license-image]][license-url] [![Downloads][downloads-image]][npm-url]
 
 > [Yeoman](http://yeoman.io) generator
 
@@ -157,3 +157,4 @@ MIT
 [npm-image]: http://img.shields.io/npm/v/generator-poole.svg
 
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg
+[license-url]: https://github.com/iamcarrico/generator-poole/blob/master/LICENSE

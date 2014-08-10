@@ -24,10 +24,11 @@ var PooleGenerator = yeoman.generators.Base.extend({
       //////////////////////////////
       if (!this.options['skip-install']) {
         // Leaving this in case we want to add it to be optional later.
-        var bower = true;
+        var bower = false;
         var npm = true;
 
-        this.spawnCommand('bundle', ['install', '--path vendor/bundle']);
+        // Install all of the gems that we need.
+        this.spawnCommand('bundle', ['install', '--path=vendor/bundle']);
 
         if (bower || npm) {
           this.installDependencies({
@@ -144,6 +145,7 @@ PooleGenerator.prototype.app = function() {
   // Other files
   this.copy('gulpfile.js', 'gulpfile.js');
   this.copy('index.html', 'index.html');
+  this.copy('about.md', 'about.md');
   this.copy('feed.xml', 'feed.xml');
   this.copy('_config.dev.yml', '_config.dev.yml');
   this.copy('404.md', '404.md');

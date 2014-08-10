@@ -8,22 +8,23 @@ var sh = require('execSync');
 var _s = require('underscore.string');
 var fs = require('fs');
 
-var shared = require('../shared.js');
-
-
 var PooleGenerator = yeoman.generators.Base.extend({
   init: function () {
     this.pkg = require('../package.json');
 
     this.on('end', function () {
-      process.chdir(this.projectSlug);
+      //////////////////////////////
+      // Move Yo Storage
+      //////////////////////////////
+      fs.renameSync('../.yo-rc.json', '.yo-rc.json');
 
       //////////////////////////////
       // Install dependencies unless --skip-install is passed
       //////////////////////////////
       if (!this.options['skip-install']) {
-        var bower = this.projectOptions.indexOf('Bower') > -1 ? true : false;
-        var npm = this.projectOptions.indexOf('Gulp') > -1 ? true : false;
+        // Leaving this in case we want to add it to be optional later.
+        var bower = true;
+        var npm = true;
 
         sh.run('bundle install --path vendor/bundle');
 
@@ -36,91 +37,138 @@ var PooleGenerator = yeoman.generators.Base.extend({
       }
 
       //////////////////////////////
-      // Move Yo Storage
-      //////////////////////////////
-      fs.renameSync('../.yo-rc.json', '.yo-rc.json');
-
-      //////////////////////////////
       // If the --git flag is passed, initialize git and add for initial commit
       //////////////////////////////
-      sh.run('git init');
-      sh.run('git add . && git commit -m "Mr. Poole\'s Generation"');
+      if (this.options['git']) {
+        sh.run('git init');
+        sh.run('git add . && git commit -m "Mr. Poole\'s Generation"');
+      }
     });
-  },
+  }
+});
 
-  askFor: function () {
-    var done = this.async();
+
+PooleGenerator.prototype.welcome = function() {
+  var cb = this.async();
+  if (!this.options['skip-welcome-message']) {
 
     // Have Yeoman greet the user.
-    this.log(shared.welcome());
+    this.log(yosay('Welcome to the Poole Jekyll generator!'));
+    this.log(
+      chalk.green(
+        'This generator will create the scaffolding for a full Jekyll site, complete with smarter Gulp settings, and deployment methods. ' + '\n'
+      )
+    );
+  }
 
-    var prompts = [
-      {
-        type: 'string',
-        name: 'projectName',
-        message: 'What\'s your projects\'s name?' + chalk.red(' (Required)'),
-        validate: function (input) {
-          if (input === '') {
-            return 'Please enter your projects\'s name';
-          }
-          return true;
+  cb();
+};
+
+PooleGenerator.prototype.askfor = function() {
+  var cb = this.async();
+
+  // Have Yeoman greet the user.
+  //this.log(shared.welcome());
+
+  var prompts = [
+    {
+      type: 'string',
+      name: 'projectName',
+      message: 'What\'s your projects\'s name?' + chalk.red(' (Required)'),
+      validate: function (input) {
+        if (input === '') {
+          return 'Please enter your projects\'s name';
         }
-      },
-      shared.extras()
-    ];
-
-    this.prompt(prompts, function (props) {
-      this.projectName = props.projectName;
-      this.projectSlug = _s.slugify(props.projectName);
-      this.projectOptions = props.projectOptions;
-
-
-      this.config.set('projectName', this.projectName);
-      this.config.set('projectSlug', this.projectSlug);
-      this.config.set('projectOptions', this.projectOptions);
-
-      // Format date for posts
-      var date = new Date();
-      this.currentDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-      this.config.set('currentDate', this.currentDate);
-
-
-      done();
-    }.bind(this));
-  },
-
-  app: function () {
-    this.mkdir(this.projectSlug);
-
-    // Base settings files.
-    this.copy('editorconfig', this.projectSlug + '/.editorconfig');
-    this.copy('jshintrc', this.projectSlug + '/.jshintrc');
-    this.copy('gitignore', this.projectSlug + '/.gitignore');
-    this.copy('bowerrc', this.projectSlug + '/.bowerrc');
-    this.copy('Gemfile', this.projectSlug + '/Gemfile');
-
-    // Other files
-    this.copy('gulpfile.js', this.projectSlug + '/gulpfile.js');
-    this.copy('index.html', this.projectSlug + '/index.html');
-    this.copy('feed.xml', this.projectSlug + '/feed.xml');
-
-
-    var keep = ['img', 'fonts', 'js'];
-    for (var i in keep) {
-      this.copy('gitkeep', this.projectSlug + '/' + keep[i] + '/.gitkeep');
+        return true;
+      }
+    },
+    {
+      type: 'string',
+      name: 'projectUrl',
+      message: 'What\'s your projects\'s URL?' + chalk.red(' (Required)'),
+      validate: function (input) {
+        if (input === '') {
+          return 'Please enter your projects\'s URL';
+        }
+        return true;
+      }
+    },
+    {
+      type: 'string',
+      name: 'description',
+      message: 'What\'s your projects\'s description?',
+      default: 'My Jekyll site.'
+    },
+    {
+      type: 'string',
+      name: 'projectRepo',
+      message: 'What\'s your projects\'s repository?'
     }
+  ];
 
-    // Folders that will be directly copied over.
-    this.directory('_includes', this.projectSlug + '/_includes');
-    this.directory('_layouts', this.projectSlug + '/_layouts');
-    this.directory('_sass', this.projectSlug + '/_sass');
+  this.prompt(prompts, function (props) {
+    this.projectName = props.projectName;
+    this.projectSlug = _s.underscored(props.projectName);
+    this.projectUrl = props.projectUrl;
+    this.description = props.description;
+    this.projectRepo = props.projectRepo;
 
 
-    // Files that need to be templated.
-    this.template('_package.json', this.projectSlug + '/package.json');
-    this.template('_bower.json', this.projectSlug + '/bower.json');
-    this.template('_posts/firstpost.md', this.projectSlug + '/_posts/' + this.currentDate + '-welcome-to-poole.md');
-  },
-});
+    this.config.set('projectName', this.projectName);
+    this.config.set('projectSlug', this.projectSlug);
+    this.config.set('projectUrl', this.projectUrl);
+    this.config.set('description', this.description);
+    this.config.set('projectRepo', this.projectRepo);
+
+    // Format date for posts
+    var date = new Date();
+    this.currentDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+    this.config.set('currentDate', this.currentDate);
+
+    cb();
+  }.bind(this));
+};
+
+PooleGenerator.prototype.app = function() {
+  // Create our project directory.
+  this.mkdir(this.projectSlug);
+
+  // Set our destination to be the new directory.
+  this.destinationRoot(this.projectSlug);
+
+  // Base settings files.
+  this.copy('editorconfig', '.editorconfig');
+  this.copy('jshintrc', '.jshintrc');
+  this.copy('gitignore', '.gitignore');
+  this.copy('bowerrc', '.bowerrc');
+
+  // Other files
+  this.copy('gulpfile.js', 'gulpfile.js');
+  this.copy('index.html', 'index.html');
+  this.copy('feed.xml', 'feed.xml');
+  this.copy('_config.dev.yml', '_config.dev.yml');
+  this.copy('404.md', '404.md');
+  this.copy('Gemfile', 'Gemfile');
+
+
+  var keep = ['_images', 'fonts', 'js'];
+  for (var i in keep) {
+    this.copy('gitkeep', '' + keep[i] + '/.gitkeep');
+  }
+
+  // Folders that will be directly copied over.
+  this.directory('_includes', '_includes');
+  this.directory('_layouts', '_layouts');
+  this.directory('_sass', '_sass');
+  this.directory('_data', '_data');
+  this.directory('_plugins', '_plugins');
+
+
+  // Files that need to be templated.
+  this.template('_package.json', 'package.json');
+  //this.template('_bower.json', 'bower.json');
+  this.template('_config.yml', '_config.yml');
+  this.template('_posts/firstpost.md', '_posts/' + this.currentDate + '-welcome-to-poole.md');
+};
 
 module.exports = PooleGenerator;

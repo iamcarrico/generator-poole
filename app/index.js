@@ -7,6 +7,7 @@ var chalk = require('chalk');
 var sh = require('execSync');
 var _s = require('underscore.string');
 var fs = require('fs');
+var shared = require('../shared.js');
 
 var PooleGenerator = yeoman.generators.Base.extend({
   init: function () {
@@ -121,9 +122,8 @@ PooleGenerator.prototype.askfor = function() {
     this.config.set('projectRepo', this.projectRepo);
 
     // Format date for posts
-    var date = new Date();
-    this.currentDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-    this.config.set('currentDate', this.currentDate);
+    this.currentDate = shared.today();
+    this.currentTime = shared.now();
 
     cb();
   }.bind(this));

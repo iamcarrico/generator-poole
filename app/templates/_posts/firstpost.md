@@ -1,8 +1,10 @@
 ---
 layout: post
 title:  "Welcome to Mr. Poole's Jekyll!"
-date:   <%= this.currentDate %> 00:00:00
-categories: jekyll update
+date:   <%= currentDate %> <%= currentTime %>
+categories:
+ - jekyll
+ - update
 ---
 
 You'll find this post in your `_posts` directory - edit this post and re-build (or run with the `-w` switch) to see your changes!

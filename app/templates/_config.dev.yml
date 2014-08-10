@@ -1,0 +1,13 @@
+development: true
+minify_html: false
+paginate: 3
+
+show_drafts: true
+future:      true
+unpublished: true
+
+assets:
+  js_compressor:
+  css_compressor:
+  cache: true
+  cachebust: none

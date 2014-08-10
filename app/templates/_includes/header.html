@@ -1,9 +1,16 @@
-<header class="site-header">
+<header>
+  <h1 class="site-name title"><a href="/"><span class="word">I. </span><span class="word">Am. </span><span class="word">Carrico.</span></a></h1>
   <nav id="nav" role="navigation">
     <div class="menubar" role="menubar">
-      <a class="menubar-link" role="menuitem" href="{{ site.baseurl }}/">{{ site.title }}</a>
-      {% for page in site.pages %}
-        <a class="menubar-link" role="menuitem" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
+      {% for nav in site.data.navigation %}
+        {% assign current = nil %}
+        {% assign url = page.url|remove:'index.html' %}
+        {% if url == nav.url %}
+          {% assign current = 'active' %}
+        {% elsif page.dir contains nav.url and nav.url != '/' %}
+          {% assign current = 'active-trail' %}
+        {% endif %}
+        <a class="menuitem {{current}}" role="menuitem" href="{{ nav.url | prepend: site.baseurl }}">{{ nav.name }}</a>
       {% endfor %}
     </div>
   </nav>

@@ -2,18 +2,17 @@
 <!--[if lt IE 9]> <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en-us"> <!--<![endif]-->
   {% include head.html %}
-  
-    <body>
 
-    {% include header.html %}
+<body>
 
-    <div class="page-content">
-      <div class="wrap">
-      {{ content }}
-      </div>
-    </div>
+  {% include header.html %}
 
-    {% include footer.html %}
+  <main role="main" {% if page.css_id %}id="{{ page.css_id }}"{% endif %}>
+    {{ content }}
+  </main>
 
-    </body>
+  {% include footer.html %}
+
+  {% include analytics.html %}
+</body>
 </html>

@@ -1,0 +1,12 @@
+<article class="blog-post teaser">
+  <h2 class="title"><a href="{{ include.post.url }}">{{ include.post.title }}</a></h2>
+  <div class="metadatas">
+    <span class="categories">
+      {% for category in include.post.categories %}<span class="category">{{ category }}</span> {% endfor %}
+    </span>&nbsp;-&nbsp;
+    <span class="date">{{ include.post.date | date: "%Y-%m-%d" }}</span>
+  </div>
+  <div class="content">
+    {{ include.post.excerpt | strip_html }}
+  </div>
+</article>

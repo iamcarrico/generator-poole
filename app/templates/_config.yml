@@ -1,11 +1,49 @@
 # Site settings
-title: Your awesome title
-email: your-email@domain.com
-description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
-baseurl: ""
-url: "http://yourdomain.com"
+name: <%= projectName %>
+description: "<%= description %>"
+baseurl: "<%= projectUrl %>"
+url: "<%= projectUrl %>"
 
-# Build settings
+# Development settings
+development: false
+debug: false
+
+# Display settings
 markdown: kramdown
 permalink: pretty
-development: false
+lsi: false
+
+# Pagination
+paginate: 10
+paginate_path: "page:num"
+
+# Build settings
+timezone: America/Chicago
+future: false
+exclude:
+  - CONTRIBUTING.md
+  - README.md
+  - config.rb
+  - package.json
+  - gulpfile.js
+  - node_modules
+  - Gemfile
+  - Gemfile.lock
+  - css
+
+# Extra gems to have fancy things.
+gems:
+  - jekyll-sitemap
+  - jekyll-redirect-from
+
+# Asset Pipeline settings
+assets:
+  dirname: assets
+  sources:
+    - js
+    - css
+    - img
+    - bower_components
+  js_compressor: 'uglifier'
+  css_compressor: 'yui'
+  cache: true

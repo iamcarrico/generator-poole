@@ -27,7 +27,7 @@ var PooleGenerator = yeoman.generators.Base.extend({
         var bower = true;
         var npm = true;
 
-        sh.run('bundle install --path vendor/bundle');
+        this.spawnCommand('bundle', ['install', '--path vendor/bundle']);
 
         if (bower || npm) {
           this.installDependencies({

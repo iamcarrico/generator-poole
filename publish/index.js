@@ -75,9 +75,10 @@ PoolePublishGenerator.prototype.askFor = function() {
 
 PoolePublishGenerator.prototype.publishDraft = function() {
   var cb = this.async();
+  var self = this;
 
-  fs.rename('_drafts/' + this.draftToPublish, '_posts/' + this.draftToPublish, function() {
-    this.log(chalk.green('Success! ') + this.draftToPublish + ' successfully published');
+  fs.rename('_drafts/' + self.draftToPublish, '_posts/' + self.draftToPublish, function() {
+    self.log(chalk.green('Success! ') + self.draftToPublish + ' successfully published');
     cb();
   });
 }

@@ -2,6 +2,7 @@
 'use strict';
 var path = require('path');
 var helpers = require('yeoman-generator').test;
+var postTitle = '2014-01-01-this-is-my-title.md';
 
 describe('poole generator', function () {
   before(function (done) {
@@ -20,6 +21,10 @@ describe('poole generator', function () {
 
       this.publish = helpers.createGenerator('poole:publish', [
         '../../publish'
+      ]);
+
+      this.publish = helpers.createGenerator('poole:unpublish', [
+        '../../unpublish'
       ]);
       done();
     }.bind(this));
@@ -58,7 +63,7 @@ describe('poole generator', function () {
     });
 
     this.post.run({}, function() {
-      helpers.assertFile(['_drafts/2014-01-01-this-is-my-title.md']);
+      helpers.assertFile(['_drafts/' + postTitle]);
       done();
     });
   });
@@ -67,11 +72,24 @@ describe('poole generator', function () {
   // and move it to the _posts file.
   it('can publish my draft', function(done) {
     helpers.mockPrompt(this.publish, {
-      'draftToPublish': '2014-01-01-this-is-my-title.md'
+      'draftToPublish': postTitle
     });
 
     this.publish.run({}, function() {
-      helpers.assertFile(['_posts/2014-01-01-this-is-my-title.md']);
+      helpers.assertFile(['_posts/' + postTitle]);
+      done();
+    })
+  });
+
+  // Now, we run the unpublisher subgenerator, which will take that post and
+  // move it right back to drafts.
+  it('can unpublish my draft', function(done) {
+    helpers.mockPrompt(this.unpublish, {
+      'draftToPublish': postTitle
+    });
+
+    this.unpublish.run({}, function() {
+      helpers.assertFile(['_drafts/' + postTitle]);
       done();
     })
   });

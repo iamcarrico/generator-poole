@@ -21,11 +21,13 @@
     "shared.js",
     "post",
     "publish",
+    "unpublish",
     "LICENSE"
   ],
   "keywords": [
     "yeoman-generator",
     "jekyll",
+    "blog",
     "jekyllrb"
   ],
   "dependencies": {

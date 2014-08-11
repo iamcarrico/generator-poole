@@ -46,8 +46,12 @@ PoolePublishGenerator.prototype.loadFiles = function() {
       return false;
     }
 
+    files = files.filter(function(element) {
+      return element.match(/^\d{4}-\d{2}-\d{2}-(.*)$/);
+    });
+
     if (files.length === 0) {
-      if (this.publish) {
+      if (self.publish) {
         self.log(chalk.red('Error: ') + 'There are no drafts that can be published');
       }
       else {

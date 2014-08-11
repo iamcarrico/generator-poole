@@ -5,6 +5,11 @@ var chalk = require('chalk');
 var fs = require('fs');
 var shared = require('../shared.js');
 
+var orderOfItAll = [
+  "_drafts",
+  "_posts"
+]
+
 var PoolePublishGenerator = yeoman.generators.Base.extend({
   init: function () {
 
@@ -20,6 +25,14 @@ PoolePublishGenerator.prototype.loadUp = function() {
     this[i] = config[i];
   }
 
+  if (this.options['unpublish']) {
+    orderOfItAll.reverse();
+    this.publish = false;
+  }
+  else {
+    this.publish = true;
+  }
+
   cb();
 };
 
@@ -27,14 +40,20 @@ PoolePublishGenerator.prototype.loadFiles = function() {
   var cb = this.async();
   var self = this;
 
-  fs.readdir('_drafts', function(err, files) {
+  fs.readdir(orderOfItAll[0], function(err, files) {
     if (err) {
-      self.log(chalk.red('Error: ') + 'There was an error trying to read the \'_drafts\' directory. Is it there?');
+      self.log(chalk.red('Error: ') + 'There was an error trying to read the \'' + orderOfItAll[0] + '\' directory. Is it there?');
       return false;
     }
 
     if (files.length === 0) {
-      self.log(chalk.red('Error: ') + 'There are no drafts that can be published');
+      if (this.publish) {
+        self.log(chalk.red('Error: ') + 'There are no drafts that can be published');
+      }
+      else {
+        self.log(chalk.red('Error: ') + 'There are no posts that can be unpublished');
+      }
+
       return false;
     }
 
@@ -49,13 +68,19 @@ PoolePublishGenerator.prototype.askFor = function() {
 
   this.fileList.unshift({
     name: 'None (cancel)', value: false
-  })
+  });
+
+  var message = "Which draft would you like to publish?";
+
+  if (!this.publish) {
+    message = "Which post would you like to unpublish?";
+  }
 
   var prompts = [
     {
       type: 'list',
       name: 'draftToPublish',
-      message: 'Which draft would you like to publish?',
+      message: message,
       choices: this.fileList,
       default: false
     }
@@ -77,8 +102,13 @@ PoolePublishGenerator.prototype.publishDraft = function() {
   var cb = this.async();
   var self = this;
 
-  fs.rename('_drafts/' + self.draftToPublish, '_posts/' + self.draftToPublish, function() {
-    self.log(chalk.green('Success! ') + self.draftToPublish + ' successfully published');
+  fs.rename(orderOfItAll[0] + '/' + self.draftToPublish, orderOfItAll[1] + '/' + self.draftToPublish, function() {
+    if (this.publish) {
+      self.log(chalk.green('Success! ') + self.draftToPublish + ' successfully published');
+    }
+    else {
+      self.log(chalk.green('Success! ') + self.draftToPublish + ' successfully unpublished');
+    }
     cb();
   });
 }

@@ -20,7 +20,8 @@
     "app",
     "shared.js",
     "post",
-    "publish"
+    "publish",
+    "LICENSE"
   ],
   "keywords": [
     "yeoman-generator",

@@ -23,7 +23,7 @@ describe('poole generator', function () {
         '../../publish'
       ]);
 
-      this.publish = helpers.createGenerator('poole:unpublish', [
+      this.unpublish = helpers.createGenerator('poole:unpublish', [
         '../../unpublish'
       ]);
       done();

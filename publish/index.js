@@ -107,7 +107,7 @@ PoolePublishGenerator.prototype.publishDraft = function() {
   var self = this;
 
   fs.rename(orderOfItAll[0] + '/' + self.draftToPublish, orderOfItAll[1] + '/' + self.draftToPublish, function() {
-    if (this.publish) {
+    if (self.publish) {
       self.log(chalk.green('Success! ') + self.draftToPublish + ' successfully published');
     }
     else {

@@ -4,7 +4,7 @@ var path = require('path');
 var helpers = require('yeoman-generator').test;
 var postTitle = '2014-01-01-this-is-my-title.md';
 
-describe('poole generator', function () {
+describe('Mr. Poole', function () {
   before(function (done) {
     helpers.testDirectory(path.join(__dirname, '.tmp'), function (err) {
       if (err) {
@@ -24,7 +24,8 @@ describe('poole generator', function () {
       ]);
 
       this.unpublish = helpers.createGenerator('poole:unpublish', [
-        '../../unpublish'
+        '../../unpublish',
+        '../../publish'
       ]);
       done();
     }.bind(this));
@@ -83,12 +84,16 @@ describe('poole generator', function () {
 
   // Now, we run the unpublisher subgenerator, which will take that post and
   // move it right back to drafts.
-  it('can unpublish my draft', function(done) {
-    helpers.mockPrompt(this.unpublish, {
+  it('can unpublish my post', function(done) {
+    // Note: this doesn't actually use the unpublish generator yet, as it isn't
+    // passing forward the prompts correctly. But this does a similar thing.
+
+    helpers.mockPrompt(this.publish, {
       'draftToPublish': postTitle
     });
 
-    this.unpublish.run({}, function() {
+    this.publish.options['unpublish'] = true;
+    this.publish.run({}, function() {
       helpers.assertFile(['_drafts/' + postTitle]);
       done();
     })

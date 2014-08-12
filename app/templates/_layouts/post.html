@@ -9,7 +9,12 @@ layout: default
   </header>
 
   <div class="post-content">
-  {{ content }}
-</div>
+    {% if page.image %}
+      <img src="/{{ page.image.url }}" alt="{{ page.image.alt }}" class="hero-image">
+    {% endif %}
+    {{ content }}
+  </div>
+
+  {% include comments.html %}
 
 </article>

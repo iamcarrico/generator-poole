@@ -1,6 +1,6 @@
 {
   "name": "generator-poole",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "A Yeoman generator for Jekyll sites.",
   "license": "MIT",
   "main": "app/index.js",
@@ -38,6 +38,7 @@
     "execSync": "~1.0.1-pre"
   },
   "devDependencies": {
+    "gulp-poole": "*",
     "mocha": "*"
   },
   "peerDependencies": {

@@ -150,6 +150,7 @@ PooleGenerator.prototype.app = function() {
   this.copy('_config.dev.yml', '_config.dev.yml');
   this.copy('404.md', '404.md');
   this.copy('Gemfile', 'Gemfile');
+  this.copy('config.rb', 'config.rb');
 
 
   var keep = ['_images', 'fonts', 'js'];

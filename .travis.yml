@@ -4,4 +4,4 @@ node_js:
 before_install:
   - currentfolder=${PWD##*/}
   - if [ "$currentfolder" != 'generator-poole' ]; then cd .. && eval "mv $currentfolder generator-poole" && cd generator-poole; fi
-
+  - bundle install

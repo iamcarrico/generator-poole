@@ -1,6 +1,5 @@
 # Pull gems from RubyGems
 source 'https://rubygems.org'
-ruby '2.0.0'
 
 # Jekyll itself.
 gem 'jekyll', '~>2.0'

@@ -10,7 +10,7 @@ var fs = require('fs');
 var shared = require('../shared.js');
 
 var PooleGenerator = yeoman.generators.Base.extend({
-  init: function () {
+  initializing: function () {
     this.pkg = require('../package.json');
 
     this.on('end', function () {
@@ -20,25 +20,6 @@ var PooleGenerator = yeoman.generators.Base.extend({
       fs.renameSync('../.yo-rc.json', '.yo-rc.json');
 
       //////////////////////////////
-      // Install dependencies unless --skip-install is passed
-      //////////////////////////////
-      if (!this.options['skip-install']) {
-        // Leaving this in case we want to add it to be optional later.
-        var bower = false;
-        var npm = true;
-
-        // Install all of the gems that we need.
-        this.spawnCommand('bundle', ['install', '--path=.vendor/bundle']);
-
-        if (bower || npm) {
-          this.installDependencies({
-            bower: bower,
-            npm: npm
-          });
-        }
-      }
-
-      //////////////////////////////
       // If the --git flag is passed, initialize git and add for initial commit
       //////////////////////////////
       if (this.options['git']) {
@@ -46,6 +27,36 @@ var PooleGenerator = yeoman.generators.Base.extend({
         sh.run('git add . && git commit -m "Mr. Poole\'s Generation"');
       }
     });
+  },
+
+  // Installation tasks to happen before end is called.
+  install: function () {
+    var cb = this.async();
+
+    //////////////////////////////
+    // Install dependencies unless --skip-install is passed
+    //////////////////////////////
+    if (!this.options['skip-install']) {
+
+      // Leavings these as variables in case we decide to use them again.
+      var bower = false;
+      var npm = true;
+
+      if (bower || npm) {
+        this.installDependencies({
+          bower: bower,
+          npm: npm
+        });
+      }
+
+      // Install our bundler components into the .vendor/bundle path, to ensure
+      // no issues if users have differing environments.
+      this.spawnCommand('bundle', ['install', '--path=.vendor/bundle'])
+        .on('close', cb);
+    }
+    else {
+      cb();
+    }
   }
 });
 

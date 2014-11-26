@@ -2,7 +2,7 @@
 'use strict';
 var assert = require('assert');
 
-describe('poole generator', function () {
+describe('Mr. Poole\'s Generator', function () {
   it('can be imported without blowing up', function () {
     var app = require('../app');
     assert(app !== undefined);

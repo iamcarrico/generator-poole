@@ -3,8 +3,7 @@
 var path = require('path');
 var helpers = require('yeoman-generator').test;
 var postTitle = '2014-01-01-this-is-my-title.md';
-var cp = require('child_process');
-var gulp = require('gulp');
+
 
 describe('Mr. Poole', function () {
   before(function (done) {
@@ -33,7 +32,7 @@ describe('Mr. Poole', function () {
     }.bind(this));
   });
 
-  it('creates expected files', function (done) {
+  it('can create expected files', function (done) {
     var expected = [
       '.editorconfig',
       'Gemfile',
@@ -99,39 +98,5 @@ describe('Mr. Poole', function () {
       helpers.assertFile(['_drafts/' + postTitle]);
       done();
     })
-  });
-
-  // Can Jekyll run without dying?
-  it('can build a Jekyll site', function(done) {
-    // Just in case, we are adding some extra time.
-    this.timeout(15000);
-
-    return cp.spawn('bundle', ['exec', 'jekyll', 'build'], {stdio: 'inherit'})
-      .on('close', function() {
-        // Just checking if the index got in there.
-        helpers.assertFile(['_site/index.html']);
-        done();
-    });
-  });
-
-  // We will test the gulp tools just by building the site.
-  it('can run the gulp tools', function(done) {
-    // An extra long timeout, because we are downloading npm modules.
-    this.timeout(3000000);
-
-    // Install the npm modules for this project.
-    return cp.spawn('npm', ['install'], {stdio: 'inherit'})
-      .on('close', function() {
-        // Emulating what our gulpfile does.
-        require('gulp-poole')(gulp);
-
-        // Start a gulp task for building.
-        gulp.start('build', function() {
-          // The only file that comes from this is the style.css. Everything
-          // else is tested from within the gulp plugin itself.
-          helpers.assertFile(['css/style.css']);
-          done();
-        });
-    });
   });
 });

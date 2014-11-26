@@ -3,8 +3,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>{{ page.title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:site_name" content="{{ site.name }}">
-  <meta property="article:author" content="{{ site.url }}/about/">
   {% poole_tags %}
-  <link rel="stylesheet" href="{{ "/css/style.css" | prepend: site.baseurl }}">
+  {% stylesheet style %}
 </head>

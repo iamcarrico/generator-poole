@@ -3,3 +3,13 @@
 //
 // You can put all of your partials here.
 /////////////////////////////////////////////////
+
+// Import all configuration, mixins, variables, etc.
+@import "config/config";
+
+// Import global behaviors.
+@import "global/normalize";
+
+
+// Temporary styles, remove after starting.
+@import "temporary";

@@ -1,6 +1,7 @@
 development: true
 minify_html: false
 paginate: 3
+baseurl: ""
 
 show_drafts: true
 future:      true

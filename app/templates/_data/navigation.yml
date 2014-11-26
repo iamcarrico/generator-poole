@@ -3,3 +3,6 @@
 
 - name: About
   url: /about/
+
+- name: Poole Documentation
+  url: http://poole.io

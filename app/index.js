@@ -28,7 +28,7 @@ var PooleGenerator = yeoman.generators.Base.extend({
         var npm = true;
 
         // Install all of the gems that we need.
-        this.spawnCommand('bundle', ['install', '--path=vendor/bundle']);
+        this.spawnCommand('bundle', ['install', '--path=.vendor/bundle']);
 
         if (bower || npm) {
           this.installDependencies({

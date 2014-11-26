@@ -6,7 +6,7 @@ var postTitle = '2014-01-01-this-is-my-title.md';
 
 
 describe('Mr. Poole', function () {
-  before(function (done) {
+  before('sets up our test generators', function (done) {
     helpers.testDirectory(path.join(__dirname, '.tmp'), function (err) {
       if (err) {
         return done(err);

@@ -32,7 +32,7 @@ describe('Mr. Poole\'s gulp tools', function () {
 
   // First, we need to compile our Sass.
   it('can compile our Sass', function(done) {
-    this.timeout(9000);
+    this.timeout(12000);
 
     require('gulp-poole')(gulp);
 

@@ -32,7 +32,7 @@ describe('Mr. Poole\'s gulp tools', function () {
 
   // First, we need to compile our Sass.
   it('can compile our Sass', function(done) {
-    this.timeout(5000);
+    this.timeout(9000);
 
     require('gulp-poole')(gulp);
 
@@ -51,10 +51,10 @@ describe('Mr. Poole\'s gulp tools', function () {
     this.timeout(15000);
 
     return cp.spawn('bundle', ['exec', 'jekyll', 'build'], {stdio: 'inherit'})
-    .on('close', function() {
-      // Just checking if the index got in there.
-      helpers.assertFile(['_site/index.html']);
-      done();
+      .on('close', function() {
+        // Just checking if the index got in there.
+        helpers.assertFile(['_site/index.html']);
+        done();
     });
   });
 

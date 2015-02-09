@@ -109,71 +109,74 @@ var PooleGenerator = yeoman.generators.Base.extend({
     this.copy('bowerrc', '.bowerrc');
   },
 
-  // Default task level.
-  app: function() {
+  writing: {
+    // Default task level.
+    app: function() {
 
-    // Run with the Corona Sass Generator. We are putting this in the
-    // intializing because we want to override a few things.
-    this.composeWith('corona:app', {
-      options: {
-        cssDir: 'css',
-        sassDir: '_sass',
-        fontsDir: 'fonts',
-        'skip-install': true,
-        'skip-welcome-message': true
+      // Run with the Corona Sass Generator. We are putting this in the
+      // intializing because we want to override a few things.
+      this.composeWith('corona:app', {
+        options: {
+          cssDir: 'css',
+          sassDir: '_sass',
+          fontsDir: 'fonts',
+          'skip-install': true,
+          'skip-welcome-message': true,
+          'skip-gemfile': true
+        }
+      });
+
+      // Other files
+      this.copy('gulpfile.js', 'gulpfile.js');
+      this.copy('index.html', 'index.html');
+      this.copy('about.md', 'about.md');
+      this.copy('feed.xml', 'feed.xml');
+      this.copy('_config.dev.yml', '_config.dev.yml');
+      this.copy('404.md', '404.md');
+
+
+      var keep = ['_images', 'fonts', 'js'];
+      for (var i in keep) {
+        this.copy('gitkeep', '' + keep[i] + '/.gitkeep');
       }
-    });
 
-    // Other files
-    this.copy('gulpfile.js', 'gulpfile.js');
-    this.copy('index.html', 'index.html');
-    this.copy('about.md', 'about.md');
-    this.copy('feed.xml', 'feed.xml');
-    this.copy('_config.dev.yml', '_config.dev.yml');
-    this.copy('404.md', '404.md');
+      // Folders that will be directly copied over.
+      this.directory('_includes', '_includes');
+      this.directory('_layouts', '_layouts');
+      this.directory('_data', '_data');
+      this.directory('_plugins', '_plugins');
 
 
-    var keep = ['_images', 'fonts', 'js'];
-    for (var i in keep) {
-      this.copy('gitkeep', '' + keep[i] + '/.gitkeep');
+      // Files that need to be templated.
+      this.template('_package.json', 'package.json');
+      this.template('_config.yml', '_config.yml');
+      this.template('_posts/firstpost.md', '_posts/' + this.currentDate + '-welcome-to-poole.md');
+
+      // We must use our Gemfile, not te one in
+      this.copy('Gemfile', 'Gemfile');
     }
-
-    // Folders that will be directly copied over.
-    this.directory('_includes', '_includes');
-    this.directory('_layouts', '_layouts');
-    this.directory('_data', '_data');
-    this.directory('_plugins', '_plugins');
-
-
-    // Files that need to be templated.
-    this.template('_package.json', 'package.json');
-    this.template('_config.yml', '_config.yml');
-    this.template('_posts/firstpost.md', '_posts/' + this.currentDate + '-welcome-to-poole.md');
-  },
-
-  // Conflicts task, where we ensure we have The Right Stuff™.
-  write: function() {
-
-    // We want to use our Gemfile, because it has more in it then just the Sass
-    // and Compass files.
-    this.copy('Gemfile', 'Gemfile');
   },
 
   // Installation tasks to happen before end is called.
   install: function () {
+    var cb = this.async();
     //////////////////////////////
     // Install dependencies unless --skip-install is passed
     //////////////////////////////
     if (!this.options['skip-install']) {
 
       this.installDependencies({
-        npm: true
+        npm: true,
+        bower: false,
       });
 
       // Install our bundler components into the .vendor/bundle path, to ensure
       // no issues if users have differing environments.
       this.spawnCommand('bundle', ['install', '--path=.vendor/bundle'])
         .on('close', cb);
+    }
+    else {
+      cb();
     }
   }
 });

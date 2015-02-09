@@ -2,10 +2,11 @@
 'use strict';
 var path = require('path');
 var helpers = require('yeoman-generator').test;
+var assert = require('yeoman-generator').assert;
 var postTitle = '2014-01-01-this-is-my-title.md';
 
-
 describe('Mr. Poole', function () {
+
   before('sets up our test generators', function (done) {
     helpers.testDirectory(path.join(__dirname, '.tmp'), function (err) {
       if (err) {
@@ -13,7 +14,10 @@ describe('Mr. Poole', function () {
       }
 
       this.app = helpers.createGenerator('poole:app', [
-        '../../app'
+        '../../app', [
+          helpers.createDummyGenerator(),
+          'corona:app'
+        ]
       ]);
 
       this.post = helpers.createGenerator('poole:post', [
@@ -32,7 +36,8 @@ describe('Mr. Poole', function () {
     }.bind(this));
   });
 
-  it('can create expected files', function (done) {
+  it('can create expected files', function(done) {
+
     var expected = [
       '.editorconfig',
       'Gemfile',

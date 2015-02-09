@@ -12,7 +12,6 @@ gem 'breakpoint', '~>2.5'
 
 group :jekyll_plugins do
   # Some base Jekyll plugins that are nice to have.
-  gem 'jekyll-minify-html'
   gem 'jekyll-sitemap'
   gem 'jekyll-redirect-from'
 

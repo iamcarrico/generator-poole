@@ -7,6 +7,10 @@ var cp = require('child_process');
 var gulp = require('gulp');
 
 describe('Mr. Poole\'s gulp tools', function () {
+  /** Commenting this out, as it will require generator-corona to run properly
+      before the test can run. Which due to current issues in composibility,
+      cannot work as we would want it to.
+
   before('create and install all needed components', function (done) {
     this.timeout(3000000);
     helpers.testDirectory(path.join(__dirname, '.tmp'), function (err) {
@@ -33,10 +37,6 @@ describe('Mr. Poole\'s gulp tools', function () {
     }.bind(this));
   });
 
-  /** Commenting this out, as it will require generator-corona to run properly
-      before the test can run. Which due to current issues in composibility,
-      cannot work as we would want it to.
-  
   // First, we need to compile our Sass.
   it('can compile our Sass', function(done) {
     this.timeout(30000);
@@ -50,7 +50,7 @@ describe('Mr. Poole\'s gulp tools', function () {
       helpers.assertFile(['css/style.css']);
       done();
     });
-  }); **/
+  });
 
   // Can Jekyll run without dying?
   it('can build a Jekyll site', function(done) {
@@ -79,5 +79,5 @@ describe('Mr. Poole\'s gulp tools', function () {
       helpers.assertFile(['css/style.css']);
       done();
     });
-  });
+  }); **/
 });
